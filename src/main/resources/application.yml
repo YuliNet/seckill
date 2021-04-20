@@ -1,0 +1,46 @@
+server:
+  port: 443
+  ssl:
+    key-store: classpath:www.yulinet.asia.jks
+    key-store-password: szkvk37s2y7qw6
+    key-store-type: JKS
+    key-alias: www.yulinet.asia
+
+# 对Redis进行配置,JRedis部分直接使用默认配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.21.16.6:3306/wechartshop
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: 123456
+  redis:
+    cluster:
+      nodes:
+        - 172.17.0.2:6379
+        - 172.17.0.3:6379
+        - 172.17.0.4:6379
+        - 172.17.0.5:6379
+        - 172.17.0.6:6379
+        - 172.17.0.7:6379
+      max-redirects: 3
+    lettuce:
+      cluster:
+        refresh:
+          adaptive: true
+          period: 15s
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+
+# 配置mybatis
+mybatis:
+  mapper-locations: classpath:*mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true

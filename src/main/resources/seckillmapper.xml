@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.seckill.mappers.SeckillMapper">
+    <!-- 数据库中的字段和实体类中的字段的结果映射 -->
+    <resultMap id="allColumns" type="com.example.seckill.dao.SeckillInfo">
+        <id column="id" property="id" />
+        <result column="deid" property="deid" />
+        <result column="sec_price" property="secPrice" />
+        <result column="stock_num" property="stockNum" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+    </resultMap>
+
+    <!-- 插入操作 -->
+    <!-- 这个使用trim标签去除多余的逗号，同时将左右括号省略 -->
+    <insert id="saveSeckillInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO seckill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.deid != null">
+                deid,
+            </if>
+            <if test="pojo.secPrice != null">
+                sec_price,
+            </if>
+            <if test="pojo.stockNum != null">
+                stock_num,
+            </if>
+            start_time,
+            end_time
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.deid != null and pojo.deid != ''">#{pojo.deid},</if>
+            <if test="pojo.secPrice != null">#{pojo.secPrice},</if>
+            <if test="pojo.stockNum != null">#{pojo.stockNum},</if>
+            now(),
+            now()
+        </trim>
+    </insert>
+
+    <!-- 删除操作 -->
+    <delete id="removeSeckillInfoById">
+        DELETE FROM seckill
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 更新操作 -->
+    <update id="updateSeckillInfo">
+        UPDATE seckill
+        <set>
+            <if test="pojo.deid != null">deid=#{pojo.deid},</if>
+            <if test="secPrice != null">sec_price=#{pojo.secPrice},</if>
+            <if test="pojo.stockNum != null">stock_num=#{pojo.stockNum},</if>
+            start_time=now(),
+            end_time=now()
+        </set>
+        WHERE id=#{pojo.id}
+    </update>
+
+    <!-- 全体信息查询操作 -->
+    <select id="findAllSeckillInfo" resultMap="allColumns">
+        SELECT * FROM seckill
+    </select>
+
+    <!-- 根据id查找某个定义的值 -->
+    <select id="findSeckillInfoById"  resultMap="allColumns">
+        SELECT * FROM seckill
+        WHERE id=#{id}
+    </select>
+
+</mapper>
