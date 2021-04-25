@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.seckill.mappers.GoodsMapper">
+    <resultMap id="GoodsAllColumns" type="com.example.seckill.dao.Goods">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="price" property="price" />
+        <result column="stock" property="stock" />
+        <result column="sale" property="sale" />
+        <result column="version" property="version" />
+        <result column="version" property="version" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+    <update id="updateSaleNoOptimisticLock">
+        UPDATE goods SET sale = sale + 1, gmt_modified = now() WHERE id = #{goods.id}
+    </update>
+    <select id="findGoodsById" resultMap="GoodsAllColumns">
+        SELECT * FROM goods WHERE id=#{goodsId}
+    </select>
+</mapper>

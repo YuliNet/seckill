@@ -10,7 +10,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.21.16.6:3306/wechartshop
+    url: jdbc:mysql://localhost:3306/seckill
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: 123456
@@ -41,6 +41,6 @@ spring:
 
 # 配置mybatis
 mybatis:
-  mapper-locations: classpath:*mapper.xml
+  mapper-locations: classpath:/mapper/*mapper.xml
   configuration:
     map-underscore-to-camel-case: true
