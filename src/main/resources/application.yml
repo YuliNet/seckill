@@ -44,3 +44,8 @@ mybatis:
   mapper-locations: classpath:/mapper/*mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+
+# 配置lombok的日志
+logging:
+  level:
+    root: info
